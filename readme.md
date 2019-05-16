@@ -20,4 +20,4 @@ It attempts to persist this shell access through init scripts (WIP)
 
 ## Issues faced
 
-For some weird reason, I couldn't access the STDIN of the root shell created by the dirtycow exploit. Thus, privilege escalation has to be done manually from the metasploit shell. However, the dirtycow exploit binary should be in the TMP folder of the system
+For some weird reason, I couldn't access the STDIN of the root shell created by the dirtycow exploit. Thus, privilege escalation has to be done manually from the metasploit shell. However, the dirtycow exploit binary should be in the TMP folder of the system, which can be used to elevate the meterpreter session to root
